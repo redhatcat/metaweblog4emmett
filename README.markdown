@@ -1,6 +1,11 @@
 **This is only guaranteed to work with Ecto as that is what it was requested for
 and tested with.**
 
+Installation
+============
+
+./script/plugin install git://github.com/redhatcat/metaweblog4emmett
+
 Add the following to the Initializer.run block your *config/environment.rb*:
 
     config.gem 'panztel-actionwebservice', :version => '2.3.5',
