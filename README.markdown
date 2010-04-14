@@ -3,5 +3,6 @@ and tested with.**
 
 In Ecto:
 --------
-Access Point: http://yourdomain.example.com/backend/api.
-System: MetaWeblog
+
+* Access Point: http://yourdomain.example.com/backend/api
+* System: MetaWeblog
