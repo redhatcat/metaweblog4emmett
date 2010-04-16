@@ -1,3 +1,5 @@
+require 'action_controller/test_process.rb'
+
 module MetaWeblogStructs
   class Article < ActionWebService::Struct
     member :description,        :string
@@ -105,11 +107,17 @@ class MetaWeblogService < WebService
     Entry.find(:all, :order => "created_at DESC", :limit => numberOfPosts).collect{ |c| article_dto_from(c) }
   end
 
-  #def newMediaObject(blogid, username, password, data)
-  #  File.new(RAILS_ROOT, 'public', '':, data['name'])
-
-  #  MetaWeblogStructs::Url.new("url" => this_blog.file_url(resource.filename))
-  #end
+  def newMediaObject(blogid, username, password, data)
+    tf = File.new(File.join(Dir.tmpdir, File.basename(data['name'])), 'w')
+    tf.write(data['bits'])
+    tf.flush
+    mf = MediaFile.new(:uploaded_data =>
+      ActionController::TestUploadedFile.new(tf.path, data['type']))
+    mf.save!
+    tf.close()
+    File.delete(tf.path)
+    MetaWeblogStructs::Url.new("url" => mf.public_filename)
+  end
 
   def newPost(blogid, username, password, struct, publish)
     entry = Entry.new
